@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #444444;
+}
+
+h1 {
+  width: 400px;
+  margin: 0 auto 8px;
+  font-family: "Georgia", serif;
+  text-align: center;
+  font-weight: normal;
+  font-size: 56px;
+  line-height: 64px;
+}
+
+h2 {
+  width: 800px;
+  text-align: center;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 12px;
+  margin-left: 100px;
+}
+
+.container {
+  width: 510px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.site-header {
+  min-width: 400px;
+  height: 186px;
+  padding-top: 30px;
+  background: #847462 no-repeat center url("/static/img/chernyj-temnyj-starinnye-model-gradient-vektor-tekstury-fon-vintazh-retro-uzor-ornament.jpg");
+  background-size: cover;
+  color: #ffffff;
+}
+
+.site-header p {
+  width: 255px;
+  margin: 0 auto 26px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.site-header img {
+  display: block;
+  margin: 0 auto;
+}
+
+.features {
+  width: 800px;
+  margin: 0 auto 30px;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.features p {
+  display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  margin: 0 5px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  text-align: center;
+}
+
+.feature-furniture {
+  padding-top: 65px;
+  background-image: url("img/pharmacy-conceptual-illustration.jpg");
+}
+
+.feature-lighting {
+  padding-top: 65px;
+  background-image: url("pharmacy-conceptual-illustration.jpg");
+}
+
+.feature-accessories {
+  padding-top: 65px;
+  background-image: url("pharmacy-conceptual-illustration.jpg");
+}
+
+
+.advantages {
+  width: 510px;
+  text-align: left;
+}
+
+.advantages-list {
+    margin-left: 100px;
+  padding: 0;
+  list-style: none;
+  padding: 7px 0 21px;
+    border-bottom: solid 2px #65b588;
+    margin-bottom: 15px;
+    width: 800px;
+}
+
+.advantages-item {
+  margin-bottom: 15px;
+  padding-left: 20px;
+  color: #872ba4;
+  font-weight: bold
+}
+
+.site-footer {
+  min-width: 550px;
+  background: #847462 no-repeat center url("/static/img/chernyj-temnyj-starinnye-model-gradient-vektor-tekstury-fon-vintazh-retro-uzor-ornament.jpg");
+  color: #ffffff;
+}
+
+.site-footer .container {
+  text-align: center;
+}
+
+.site-footer p {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 20px;
+}
+
+header {
+    font-size: 20px;
+}
+
+header #top-region-block {
+    text-transform: uppercase;
+    background-repeat: no-repeat;
+    font-size: 25px;
+}
+
+header #top-line {
+    height: 50px;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    padding: 0 50px;
+    border-bottom: 1px solid #CFD5D8;
+}
+
+header #top-mobile-block {
+    font-weight: bold;
+    text-transform: uppercase;
+    background-repeat: no-repeat;
+    padding-right:200px;
+}
+
+.bigBanner {
+    margin: 0;
+    overflow: auto;
+    width: 800px;
+    padding: 10px 0;
+    margin: 0 15;
+    margin-left: 100px;
+}
+
+.fon {
+    background-color: #F5F5DC
+}
+
+
+nav {
+    width: 750px;
+    margin: 0 auto;
+    text-align: center;
+}
+nav ul {
+    display: inline-block;
+}
+nav li {
+}
+
+.catalog{
+    position: absolute;
+    background-color: #00FF00;
+    width: 110px;
+    right: 920px;
+}
+
+.call{
+    position: absolute;
+    right: 400px;
+    top: 40px;
+}
+
+
+-webkit-text-size-adjust: 100%;
+--max-layout-inner-width: 1080px;
+--max-header-width: 1680px;
+--insta-navigation-height: 80px;
+--desktop-header-height: 64px;
+--mobile-header-height: 56px;
+--module: 8px;
+--m-1: calc(var(--module)*1);
+--m-2: calc(var(--module)*2);
+--m-3: calc(var(--module)*3);
+--m-4: calc(var(--module)*4);
+--m-5: calc(var(--module)*5);
+--m-6: calc(var(--module)*6);
+--m-7: calc(var(--module)*7);
+--m-8: calc(var(--module)*8);
+--m-9: calc(var(--module)*9);
+--color-white: 255, 255, 255;
+--color-black: 32, 32, 32;
+--color-gray: #999;
+--color-dark-charcoal: #303336;
+--color-gray-secondary: #81899a;
+--color-link: 64, 128, 198;
+--color-dark: #222426;
+--color-yndx: #323555;
+--color-red: #f43;
+--color-crm-accent: #6951ff;
+--gallery-panel-width: 280px;
+font-family: 'YS Text','Helvetica Neue',Arial,sans-serif;
+font-feature-settings: 'liga','kern';
+--theme-main: #FFD353;
+--theme-main-transparent: rgba(255, 211, 83, 0);
+--theme-shadow: rgba(255, 211, 83, 0.5);
+--theme-accent: #FFC71F;
+--theme-accent-transparent: rgba(255, 199, 31, 0);
+--theme-text: rgb(var(--color-black));
+--color-fg: var(--color-black);
+--color-bg: var(--color-white);
+box-sizing: border-box;
+border-width: 0;
+border-style: solid;
+border-color: #e2e8f0;
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+margin: var(--m-1) calc(0px - var(--m-1)) 0;
+.simbols {
+    max-width: 700ex;
+    float: left;
+     margin: 0;}
