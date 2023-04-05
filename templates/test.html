@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>{{title}}</title>
+</head>
+<body class="fon">
+  <header class="site-header">
+      <div>
+        <div id="top-line">
+			<div id="top-region-block">
+			<div class="up"><span>Москва</span></div>
+            </div>
+            <div id="parmacy-block">
+            </div>
+            <form action="/catalog" method="post">
+        <button class="catalog up" onclick="window.location.href = 'http://127.0.0.1:8111/catalog';">
+			<span rel="nofollow" type="submit">Каталог</span>
+        </button>
+            </form>
+
+          <div id="top-phone-block" class="up">
+				<a class='call up' rel="nofollow" href="tel:+79251112338">Позвоните нам!</a>
+            </div>
+		        <div id="top-auth-block">
+        {% if current_user.is_authenticated %}
+            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+            <p>
+                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                <a class="btn btn-success" href="/login">Войти</a>
+            </p>
+        {% endif %}
+    </div>
+      </div>
+<div role="main" class="container">
+    <div class="container">
+    <h1>Аптека - Комета</h1>
+    <p>Разнообразные лекарства для здоровья всей семьи!</p>
+    </div>
+</div></div>
+</header>{% block content %}
+<div class="fon">
+    <section class="bigBanner">
+<div class="left-car">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+                crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+              crossorigin="anonymous">
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{url_for('static', filename='img/laktobalans-skidka-100-rub_ContentPanel.jpg')}}"
+                         class="d-block w-100 leftfoto" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url_for('static', filename='img/france_cosmetique-25perc_ContentPanel.jpg')}}"
+                         class="d-block w-100 leftfoto" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{url_for('static', filename='img/pri-pokupke-upakovki-estrovel-520-mg-n30-skidka-60r_ContentPanel.jpg')}}"
+                         class="d-block w-100 leftfoto" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+</div>
+</section>
+<svg class="extras__icon left-picture" width="42" height="42" viewBox="0 0 42 42" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M20.959 33.14l-10.345 6.615c-.724.463-1.673.229-2.119-.523a1.65 1.65 0 01-.183-1.224l3.005-12.52-8.728-7.106a1.639 1.639 0 01-.26-2.243c.264-.35.656-.57 1.083-.606l11.406-.985 4.744-11.575c.332-.812 1.237-1.19 2.02-.845.367.162.66.467.815.849l4.706 11.57 11.484.986c.847.073 1.478.845 1.408 1.725a1.616 1.616 0 01-.587 1.127l-8.763 7.103 3 12.529c.204.856-.298 1.723-1.123 1.936a1.492 1.492 0 01-1.178-.19L20.959 33.14z"
+          fill="currentColor"></path>
+</svg>
+<div class="left-text">Строгое соблюдение условий хранения</div><br><br><br>
+<svg class="extras__icon left-picture" width="42" height="42" viewBox="0 0 42 42" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M20.959 33.14l-10.345 6.615c-.724.463-1.673.229-2.119-.523a1.65 1.65 0 01-.183-1.224l3.005-12.52-8.728-7.106a1.639 1.639 0 01-.26-2.243c.264-.35.656-.57 1.083-.606l11.406-.985 4.744-11.575c.332-.812 1.237-1.19 2.02-.845.367.162.66.467.815.849l4.706 11.57 11.484.986c.847.073 1.478.845 1.408 1.725a1.616 1.616 0 01-.587 1.127l-8.763 7.103 3 12.529c.204.856-.298 1.723-1.123 1.936a1.492 1.492 0 01-1.178-.19L20.959 33.14z"
+                              fill="currentColor"></path>
+</svg>
+<div class="left-text">Анонимное медицинское обследование</div><br><br><br>
+<svg class="extras__icon left-picture" width="42" height="42" viewBox="0 0 42 42" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M20.959 33.14l-10.345 6.615c-.724.463-1.673.229-2.119-.523a1.65 1.65 0 01-.183-1.224l3.005-12.52-8.728-7.106a1.639 1.639 0 01-.26-2.243c.264-.35.656-.57 1.083-.606l11.406-.985 4.744-11.575c.332-.812 1.237-1.19 2.02-.845.367.162.66.467.815.849l4.706 11.57 11.484.986c.847.073 1.478.845 1.408 1.725a1.616 1.616 0 01-.587 1.127l-8.763 7.103 3 12.529c.204.856-.298 1.723-1.123 1.936a1.492 1.492 0 01-1.178-.19L20.959 33.14z"
+                              fill="currentColor"></path>
+</svg>
+<div class="left-text">Выезд на дом</div><br><br>
+<br><br><br><br>
+<section class="left-car left-list">
+<section class="advantages">
+    <h2>Что выделяет нас среди конкурентов?</h2>
+    <nav>
+        <ul class="advantages-list">
+            <li class="advantages-item">Самые низкие цены!</li>
+            <li class="advantages-item">Большой ассортимент товаров!</li>
+            <li class="advantages-item">Множество торговых точек!</li>
+            <li class="advantages-item">Гарант качества!</li>
+            <li class="advantages-item">Быстрая доставка по всей Москве!</li>
+        </ul>
+    </nav>
+</section>
+
+</section>
+<img src="{{url_for('static', filename='img/ребёнок.jpg')}}" class="" alt="...">
+    {% for item in range(3) %}
+        <br>
+    {% endfor %}
+
+    {% endblock %}
+</div>
+</body>
+<footer class="site-footer">
+      <div class="container">
+        <p>© Аптека, 2023</p>
+        <p>Мы заботимся о вашем здоровье</p>
+      </div>
+</footer>
+</html>
