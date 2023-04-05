@@ -112,6 +112,7 @@ h2 {
   min-width: 550px;
   background: #847462 no-repeat center url("/static/img/chernyj-temnyj-starinnye-model-gradient-vektor-tekstury-fon-vintazh-retro-uzor-ornament.jpg");
   color: #ffffff;
+  height: 50px;
 }
 
 .site-footer .container {
@@ -142,25 +143,11 @@ header #top-line {
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
-    padding: 0 50px;
+    padding: 10px 25px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #CFD5D8;
 }
 
-header #top-mobile-block {
-    font-weight: bold;
-    text-transform: uppercase;
-    background-repeat: no-repeat;
-    padding-right:200px;
-}
-
-.bigBanner {
-    margin: 0;
-    overflow: auto;
-    width: 800px;
-    padding: 10px 0;
-    margin: 0 15;
-    margin-left: 100px;
-}
 
 .fon {
     background-color: #F5F5DC
@@ -183,12 +170,18 @@ nav li {
     background-color: #00FF00;
     width: 110px;
     right: 920px;
+    height: 36px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 25px;
 }
 
 .call{
     position: absolute;
     right: 400px;
-    top: 40px;
+    top: 25px;
 }
 
 
@@ -241,3 +234,62 @@ margin: var(--m-1) calc(0px - var(--m-1)) 0;
     max-width: 700ex;
     float: left;
      margin: 0;}
+
+.centre {
+    text-align: center;
+}
+
+
+.login_form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 450px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto 20px;
+    }
+
+.left-car{
+    float: left;
+    margin: 0;
+    overflow: auto;
+    width: 800px;
+    padding: 10px 0;
+    left: 90px;
+  /* рамочка и отступ для красоты (не обязательно) */
+  margin: 0 10px 5px 0;
+}
+
+.left-picture {
+  float: left;
+
+  /* рамочка и отступ для красоты (не обязательно) */
+  margin: 0 10px 5px 0;
+  text-align: center;
+  border: 1px solid black;
+  margin-top:20px;
+}
+
+.left-text{
+  float: left;
+
+  /* рамочка и отступ для красоты (не обязательно) */
+  margin: 10px 10px 5px 10px;
+  padding: 10px 0;
+  margin: 0 15;
+  margin-top:20px;
+  text-align: center;}
+
+
+.bigBanner{
+   margin-left: 100px;
+}
+
+.left-list{
+    width: 1000px;
+}
+
+.up{
+    padding-bottom: 25px;
+}
