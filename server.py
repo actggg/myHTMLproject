@@ -5,6 +5,7 @@ from data import db_session
 from data import users, news
 from data.news import News, NewsForm
 from data.users import User, LoginForm, RegisterForm
+from forms.med import MedForm
 
 
 app = Flask(__name__)
@@ -43,6 +44,12 @@ def login():
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
+
+
+@app.route('/add_med', methods=['GET', 'POST'])
+def add_med():
+    form = MedForm()
+    return render_template('med.html', title='Авторизация', form=form)
 
 
 
@@ -86,7 +93,9 @@ def logout():
 
 @app.route('/catalog', methods=['GET', 'POST'])
 def catalog():
-    return render_template('catalog.html', title='Каталог')
+    db_sess = db_session.create_session()
+    medicines = db_sess.query(News).all()
+    return render_template('catalog.html', title='Авторизация', med = medicines)
 
 
 def main():

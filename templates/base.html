@@ -28,7 +28,9 @@
             </div>
 		        <div id="top-auth-block">
         {% if current_user.is_authenticated %}
-            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+            <p class="up">
+            <a class="navbar-brand up" href="/logout">{{ current_user.name }}</a>
+            <p>
         {% else %}
             <p>
                 <a class="btn btn-primary " href="/register">Зарегистрироваться</a>

@@ -1,17 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Записи в блоге</h1>
-{% for item in news%}
-<div class="col-md6 border rounded">
-    <h2>{{item.title}}</h2>
-    <div>
-        {{item.content}}
+<h1>Каталог</h1>
+{% for item in med%}
+<div class="border">
+    <div class="borderin">
+       {{item.title}}
     </div>
-    <div>
-        Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
+    <div class="borderin">
+        <img src="{{url_for('static', filename='img/лекарства/{{item.picture}}')}}"
+                         style="max-width: 280px;  margin: 10px 0px 5px 0;" alt="...">
     </div>
+    <div class="borderin">
+        <div class="price">
+            <div class="pricein">
+             Цена: {{item.price}}
+            </div>
+            <div class="pricein">
+             Количество: {{item.quantity}}
+            </div>
+        </div>
+    </div>
+
 </div>
-{{ for i in }}
+{% endfor %}
+{% for item in med%}
+<br><br><br>
 {% endfor %}
 {% endblock %}

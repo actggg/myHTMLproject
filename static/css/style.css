@@ -293,3 +293,31 @@ margin: var(--m-1) calc(0px - var(--m-1)) 0;
 .up{
     padding-bottom: 25px;
 }
+
+
+.border{
+    margin: 0 10px 5px 0;
+    text-align: center;
+    border: 1px solid black;
+    max-width: 300px;
+    float:left;
+}
+
+.borderin{
+    margin: 0 0px 0px 0;
+    text-align: center;
+    border: 1px solid black;
+    max-width: 300px;
+
+}
+
+.price{
+    width: 300px;
+}
+
+.pricein {
+   float:left;
+text-align: center;
+border: 1px solid black;
+width: 148px;
+}
