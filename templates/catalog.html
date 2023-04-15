@@ -8,8 +8,8 @@
        {{item.title}}
     </div>
     <div class="borderin">
-        <img src="{{url_for('static', filename='img/лекарства/{{item.picture}}')}}"
-                         style="max-width: 280px;  margin: 10px 0px 5px 0;" alt="...">
+        <img src="{{url_for('static', filename='img/лекарства/' + item.picture)}}"
+                         style="max-width: 280px; max-height: 180px; margin: 10px 0px 5px 0;" alt="...">
     </div>
     <div class="borderin">
         <div class="price">
@@ -24,7 +24,8 @@
 
 </div>
 {% endfor %}
-{% for item in med%}
 <br><br><br>
+{% for item in med%}
+<br><br><br><br>
 {% endfor %}
 {% endblock %}
