@@ -28,7 +28,7 @@
         </div>
     </div>
     {% if item.quantity > 0 %}
-        <button class="borderin">
+        <button class="borderin" onclick="window.location='http://127.0.0.1:8120/plus/{{item.id}}'">
             Добавить в корзину!
         </button>
     {% else %}
@@ -42,7 +42,7 @@
 {% if current_user.name == Admin and current_user.is_authenticated %}
 <button>
     <img src="{{url_for('static', filename='img/Плюс.png')}}"
-                         style="max-width: 280px; max-height: 260px; margin: 10px 0px 5px 0;" alt="...">
+                         style="width: 280px; height: 260px; margin: 10px 0px 5px 0;" alt="...">
 </button>
 {% endif %}
 <br><br><br><br>

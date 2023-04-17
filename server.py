@@ -6,6 +6,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from data import db_session
 from data import users
 from data.news import News
+from data.medandusers import Med
 from data.users import User, LoginForm, RegisterForm
 from forms.med import MedForm
 from forms.place import PlaceForm
@@ -100,10 +101,12 @@ def catalog():
 @login_required
 @app.route('/basket', methods=['GET', 'POST'])
 def basket():
-    print(current_user.name)
+    x = []
     db_sess = db_session.create_session()
-    medicines = db_sess.query(News).all()
-    return render_template('basket.html', title='Корзина', med=medicines)
+    medicines = db_sess.query(Med).filter(Med.id_user.like(current_user.id)).all()
+    for i in medicines:
+        x.append(db_sess.query(News).filter(News.id.like(i.id_med)).first())
+    return render_template('basket.html', title='Корзина', med=x)
 
 
 @login_required
@@ -121,6 +124,26 @@ def minus(u):
         medicines = db_sess.query(News).all()
         return basket()
     return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities)
+
+
+@login_required
+@app.route('/plus/<u>', methods=['GET', 'POST'])
+def plus(u):
+    db_session.global_init("db/blogs.db")
+    session = db_session.create_session()
+    if session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first():
+        session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first().quantity += 1
+    else:
+        m = Med()
+        m.id_user = current_user.id
+        m.id_med = u
+        m.quantity = 1
+        session.add(m)
+        session.commit()
+    db_sess = db_session.create_session()
+    medicines = db_sess.query(News).all()
+    return render_template('catalog.html', title='Каталог', med=medicines)
+
 
 
 def pars():
@@ -168,9 +191,12 @@ def main():
     # app.run()
     session = db_session.create_session()
     new_med("Венарус", 100, 50, "Венарус.png")
-    new_med("Лизобакт", 100, 50, "Лизобакт.jpg")
-    new_med("Супрастин", 100, 50, "Супрастин.jpg")
-    app.run(port=8119, host='127.0.0.1')
+    new_med("Лизобакт", 299, 50, "Лизобакт.jpg")
+    new_med("Супрастин", 223, 50, "Супрастин.jpg")
+    new_med("Ринофлуимуцил", 554, 50, "Ринофлуимуцил.jpg")
+    new_med("Йодомарин", 24, 50, "Йодомарин.png")
+    new_med("Эспумизан", 354, 25, "Эспумизан.jpg")
+    app.run(port=8120, host='127.0.0.1')
 
 
 if __name__ == '__main__':
