@@ -28,7 +28,7 @@
         </div>
     </div>
     {% if item.quantity > 0 %}
-        <button class="borderin" onclick="window.location='http://127.0.0.1:8120/plus/{{item.id}}'">
+        <button class="borderin" onclick="window.location='http://127.0.0.1:8121/plus/{{item.id}}'">
             Добавить в корзину!
         </button>
     {% else %}
@@ -47,6 +47,6 @@
 {% endif %}
 <br><br><br><br>
 {% for item in med%}
-<br><br><br><br>
+<br><br><br><br><br>
 {% endfor %}
 {% endblock %}

@@ -21,16 +21,13 @@
             </div>
         </div>
     </div>
-    <button class="borderin">
+    <button class="borderin" onclick="window.location='http://127.0.0.1:8121/delete/{{item.id}}'">
         Убрать из корзины!
     </button>
-    <button class="borderin" onclick="window.location='http://127.0.0.1:8120/minus/{{item.id}}'">
+    <button class="borderin" onclick="window.location='http://127.0.0.1:8121/minus/{{item.id}}'">
         Заказать!!!
     </button>
 </div>
 {% endfor %}
-<br><br><br><br><br>
-{% for item in med%}
-<br><br><br><br>
-{% endfor %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

@@ -144,6 +144,16 @@ def plus(u):
     medicines = db_sess.query(News).all()
     return render_template('catalog.html', title='Каталог', med=medicines)
 
+@login_required
+@app.route('/delete/<u>', methods=['GET', 'POST'])
+def delete(u):
+    db_sess = db_session.create_session()
+    med = db_sess.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first()
+    if med:
+        db_sess.delete(med)
+        db_sess.commit()
+    return basket()
+
 
 
 def pars():
@@ -196,7 +206,7 @@ def main():
     new_med("Ринофлуимуцил", 554, 50, "Ринофлуимуцил.jpg")
     new_med("Йодомарин", 24, 50, "Йодомарин.png")
     new_med("Эспумизан", 354, 25, "Эспумизан.jpg")
-    app.run(port=8120, host='127.0.0.1')
+    app.run(port=8121, host='127.0.0.1')
 
 
 if __name__ == '__main__':
