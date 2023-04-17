@@ -1,12 +1,14 @@
+import requests
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from data import db_session
-from data import users, news
-from data.news import News, NewsForm
+from data import users
+from data.news import News
 from data.users import User, LoginForm, RegisterForm
 from forms.med import MedForm
-
+from forms.place import PlaceForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -17,7 +19,6 @@ login_manager.init_app(app)
 @app.route("/")
 def base():
     return render_template("base.html")
-
 
 
 def index():
@@ -45,12 +46,10 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-
 @app.route('/add_med', methods=['GET', 'POST'])
 def add_med():
     form = MedForm()
     return render_template('med.html', title='Авторизация', form=form)
-
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -95,22 +94,84 @@ def logout():
 def catalog():
     db_sess = db_session.create_session()
     medicines = db_sess.query(News).all()
-    return render_template('catalog.html', title='Авторизация', med = medicines)
+    return render_template('catalog.html', title='Каталог', med=medicines)
 
 
+@login_required
 @app.route('/basket', methods=['GET', 'POST'])
 def basket():
+    print(current_user.name)
     db_sess = db_session.create_session()
     medicines = db_sess.query(News).all()
-    return render_template('basket.html', title='Авторизация', med = medicines)
+    return render_template('basket.html', title='Корзина', med=medicines)
+
+
+@login_required
+@app.route('/minus/<u>', methods=['GET', 'POST'])
+def minus(u):
+    form = PlaceForm()
+    cities = pars()
+    if form.validate_on_submit():
+        db_session.global_init("db/blogs.db")
+        session = db_session.create_session()
+        x = session.query(News).filter(News.id.like(u)).first()
+        x.quantity = x.quantity - int(form.quantity.data)
+        session.commit()
+        db_sess = db_session.create_session()
+        medicines = db_sess.query(News).all()
+        return basket()
+    return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities)
+
+
+def pars():
+    cities = []
+    link = 'https://ru.wikipedia.org/wiki/Список_городов_России'
+    resp = requests.get(link)
+    if 300 > resp.status_code >= 200:
+        bs = BeautifulSoup(resp.text, "html5lib")
+        anArticle = BeautifulSoup(" ".join([p.text for p in bs.find_all("p")]), "html5lib").get_text().replace(
+            "\xa0", " ")
+        anArticle = anArticle.replace('↑', '')
+        count = 0
+        for link in anArticle.split('\n'):
+            if link == ' Москва, столица России':
+                cities.append('Москва')
+                count = 1
+            elif count != 0 and count != 15:
+                count += 1
+                cities.append(link[1:])
+        return cities
+
+
+def if_in_table(name):
+    db_session.global_init("db/blogs.db")
+    session = db_session.create_session()
+    if session.query(News).filter(News.title.like(name)).all():
+        return False
+    return True
+
+
+def new_med(title, price, quantity, picture):
+    if if_in_table(title):
+        m = News()
+        m.title = title
+        m.price = price
+        m.quantity = quantity
+        m.picture = picture
+        session = db_session.create_session()
+        session.add(m)
+        session.commit()
 
 
 def main():
     db_session.global_init("db/blogs.db")
-    app.run(port=8113, host='127.0.0.1')
+    # app.run()
+    session = db_session.create_session()
+    new_med("Венарус", 100, 50, "Венарус.png")
+    new_med("Лизобакт", 100, 50, "Лизобакт.jpg")
+    new_med("Супрастин", 100, 50, "Супрастин.jpg")
+    app.run(port=8119, host='127.0.0.1')
 
 
 if __name__ == '__main__':
     main()
-
-

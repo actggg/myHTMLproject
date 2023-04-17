@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login_form">
+<h1>Укажите место куда вам доставить товар</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.city.label }}<br>
+            <select class="form-control" id="classSelect" name="city">
+              {% for city in cities %}
+              <option>{{ city }}</option>
+              {% endfor %}
+
+            </select>
+    </p>
+    <p>
+        {{ form.street.label }}<br>
+        {{ form.street(class="form-control") }}<br>
+    </p>
+    <p>
+        {{ form.house_number.label }}<br>
+        {{ form.house_number(class="form-control") }}<br>
+    </p>
+    <p>
+        {{ form.apartment_number.label }}<br>
+        {{ form.apartment_number(class="form-control") }}<br>
+    </p>
+    <p>
+        {{ form.quantity.label }}<br>
+        {{ form.quantity(class="form-control") }}<br>
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+</div>
+{% endblock %}

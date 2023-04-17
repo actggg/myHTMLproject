@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Корзина</h1>
+{% for item in med%}
+<div class="border">
+    <div class="borderin">
+       {{item.title}}
+    </div>
+    <div class="borderin">
+        <img src="{{url_for('static', filename='img/лекарства/' + item.picture)}}"
+                         style="max-width: 280px; max-height: 180px; margin: 10px 0px 5px 0;" alt="...">
+    </div>
+    <div class="borderin">
+        <div class="price">
+            <div class="pricein">
+             Цена: {{item.price}} руб
+            </div>
+            <div class="pricein">
+             Количество: {{item.quantity}}
+            </div>
+        </div>
+    </div>
+    <button class="borderin">
+        Убрать из корзины!
+    </button>
+    <button class="borderin" onclick="window.location='http://127.0.0.1:8119/minus/{{item.id}}'">
+        Заказать!!!
+    </button>
+</div>
+{% endfor %}
+<br><br><br><br><br>
+{% for item in med%}
+<br><br><br><br>
+{% endfor %}
+{% endblock %}

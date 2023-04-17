@@ -14,17 +14,38 @@
     <div class="borderin">
         <div class="price">
             <div class="pricein">
-             Цена: {{item.price}}
+             Цена: {{item.price}} руб
             </div>
-            <div class="pricein">
-             Количество: {{item.quantity}}
-            </div>
+            {% if item.quantity > 0 %}
+                <div class="pricein">
+                 Количество: {{item.quantity}}
+                </div>
+            {% else %}
+                <div class="pricein">
+                 Нет в наличии
+                </div>
+            {% endif %}
         </div>
     </div>
-
+    {% if item.quantity > 0 %}
+        <button class="borderin">
+            Добавить в корзину!
+        </button>
+    {% else %}
+    <div class="borderin">
+       Пока не доступно!
+    </div>
+    {% endif %}
 </div>
 {% endfor %}
-<br><br><br>
+{{current_user.name}}
+{% if current_user.name == Admin and current_user.is_authenticated %}
+<button>
+    <img src="{{url_for('static', filename='img/Плюс.png')}}"
+                         style="max-width: 280px; max-height: 260px; margin: 10px 0px 5px 0;" alt="...">
+</button>
+{% endif %}
+<br><br><br><br>
 {% for item in med%}
 <br><br><br><br>
 {% endfor %}
