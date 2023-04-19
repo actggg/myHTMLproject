@@ -9,5 +9,5 @@ class PlaceForm(FlaskForm):
     street = StringField('Улица')
     house_number = StringField('Номер дома')
     apartment_number = StringField('Номер квартиры')
-    quantity = StringField('Номер квартиры')
+    quantity = StringField('Количество')
     submit = SubmitField('Заказать')

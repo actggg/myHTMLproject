@@ -29,7 +29,7 @@
         </div>
     </div>
     {% if item.quantity > 0 %}
-        <button class="borderin" onclick="window.location='http://127.0.0.1:8122/plus/{{item.id}}'">
+        <button class="borderin" onclick="window.location='http://127.0.0.1:8123/plus/{{item.id}}'">
             Добавить в корзину!
         </button>
     {% else %}
@@ -39,15 +39,17 @@
     {% endif %}
 </div>
 {% endfor %}
-{% if current_user.name == 'Admin' and current_user.is_authenticated %}
+{% if current_user.is_authenticated and current_user.name == 'Admin' %}
 <button>
     <img src="{{url_for('static', filename='img/Плюс.png')}}"
                          style="width: 280px; height: 260px; margin: 10px 0px 5px 0;" alt="...">
-</button>
+</button><br><br>
+{% else %}
+    {% for i in med %}
+{% if loop.index % 4 == 1 %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endif %}
+{% endfor %}
 {% endif %}
 </div>
-<br><br><br><br>
-{% for item in med%}
-<br><br><br><br><br>
-{% endfor %}
 {% endblock %}

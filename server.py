@@ -110,11 +110,13 @@ def basket():
 
 
 @login_required
-@app.route('/minus/<u>', methods=['GET', 'POST'])
-def minus(u):
+@app.route('/minus/<u>/<where>', methods=['GET', 'POST'])
+def minus(u, where):
+    print(u)
     form = PlaceForm()
     cities = pars()
     if form.validate_on_submit():
+        print('ddddd')
         db_session.global_init("db/blogs.db")
         session = db_session.create_session()
         x = session.query(News).filter(News.id.like(u)).first()
@@ -123,7 +125,7 @@ def minus(u):
         db_sess = db_session.create_session()
         medicines = db_sess.query(News).all()
         return basket()
-    return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities)
+    return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
 
 
 @login_required
@@ -155,6 +157,18 @@ def delete(u):
     return basket()
 
 
+@login_required
+@app.route('/accept/<id>/<quantity>', methods=['GET', 'POST'])
+def accept(id, quantity):
+    print(1)
+    db_sess = db_session.create_session()
+    price = db_sess.query(News).filter(News.id.like(id)).first().price
+    all_price = price * quantity
+    return render_template('price.html', price=all_price, id=id)
+
+
+def add_med():
+    return render_template('add_item.html')
 
 def pars():
     cities = []
@@ -206,7 +220,7 @@ def main():
     new_med("Ринофлуимуцил", 554, 50, "Ринофлуимуцил.jpg")
     new_med("Йодомарин", 224, 50, "Йодомарин.png")
     new_med("Эспумизан", 354, 25, "Эспумизан.jpg")
-    app.run(port=8122, host='127.0.0.1')
+    app.run(port=8123, host='127.0.0.1')
 
 
 if __name__ == '__main__':
