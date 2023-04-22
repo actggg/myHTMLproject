@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, BooleanField, SubmitField
+from flask_wtf.file import FileRequired
+from wtforms import EmailField, PasswordField, BooleanField, SubmitField, StringField, FileField
 from wtforms.validators import DataRequired
 
 
 class MedForm(FlaskForm):
-    title = EmailField('Почта', validators=[DataRequired()])
-    price = PasswordField('Пароль', validators=[DataRequired()])
-    quantity = BooleanField('Запомнить меня')
-    picture = SubmitField('Войти')
+    title = StringField('Название')
+    price = StringField('Цена')
+    quantity = StringField('Количество')
+    picture = FileField('Картинка', validators=[FileRequired()])
+    submit = SubmitField('Войти')

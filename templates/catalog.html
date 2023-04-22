@@ -10,7 +10,7 @@
     </div>
     <div class="borderin">
         <img src="{{url_for('static', filename='img/лекарства/' + item.picture)}}"
-                         style="max-width: 280px; max-height: 180px; margin: 10px 0px 5px 0;" alt="...">
+                         style="max-width: 280px; height: 180px; margin: 10px 0px 5px 0;" alt="Пока нет картинки!">
     </div>
     <div class="borderin">
         <div class="price">
@@ -29,7 +29,7 @@
         </div>
     </div>
     {% if item.quantity > 0 %}
-        <button class="borderin" onclick="window.location='http://127.0.0.1:8123/plus/{{item.id}}'">
+        <button class="borderin" onclick="window.location='http://127.0.0.1:8124/plus/{{item.id}}'">
             Добавить в корзину!
         </button>
     {% else %}
@@ -40,10 +40,10 @@
 </div>
 {% endfor %}
 {% if current_user.is_authenticated and current_user.name == 'Admin' %}
-<button>
+<button style="margin-top: 65px; margin-left: 80px;">
     <img src="{{url_for('static', filename='img/Плюс.png')}}"
-                         style="width: 280px; height: 260px; margin: 10px 0px 5px 0;" alt="...">
-</button><br><br>
+                         style="width: 150px; height: 150px; margin: 0px 0px 0px 0;" alt="..." onclick="window.location='http://127.0.0.1:8124/add_item'">
+</button><br><br><br><br><br><br>
 {% else %}
     {% for i in med %}
 {% if loop.index % 4 == 1 %}
