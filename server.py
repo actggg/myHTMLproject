@@ -123,8 +123,9 @@ def minus(u, where):
             db_session.global_init("db/blogs.db")
             session = db_session.create_session()
             x = session.query(News).filter(News.id.like(u)).first()
-            x.money -= way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}')
-            x.money = int(form.quantity.data) * x.price
+            u = session.query(User).filter(User.id.like(current_user.id)).first()
+            u.money -= int(round(way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') / 20, 0))
+            u.money -= int(form.quantity.data) * x.price
             x.quantity = x.quantity - int(form.quantity.data)
             session.commit()
             return basket()
