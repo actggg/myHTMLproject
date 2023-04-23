@@ -1,14 +1,16 @@
+import math
 import os
+
 import requests
-from werkzeug.utils import secure_filename
 from bs4 import BeautifulSoup
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from werkzeug.utils import secure_filename
 
 from data import db_session
 from data import users
-from data.news import News
 from data.medandusers import Med
+from data.news import News
 from data.users import User, LoginForm, RegisterForm
 from forms.med import MedForm
 from forms.place import PlaceForm
@@ -117,15 +119,17 @@ def minus(u, where):
     form = PlaceForm()
     cities = pars()
     if form.validate_on_submit():
-        print('ddddd')
-        db_session.global_init("db/blogs.db")
-        session = db_session.create_session()
-        x = session.query(News).filter(News.id.like(u)).first()
-        x.quantity = x.quantity - int(form.quantity.data)
-        session.commit()
-        db_sess = db_session.create_session()
-        medicines = db_sess.query(News).all()
-        return basket()
+        if way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') != False:
+            db_session.global_init("db/blogs.db")
+            session = db_session.create_session()
+            x = session.query(News).filter(News.id.like(u)).first()
+            x.money -= way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}')
+            x.money = int(form.quantity.data) * x.price
+            x.quantity = x.quantity - int(form.quantity.data)
+            session.commit()
+            return basket()
+        else:
+            return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
     return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
 
 
@@ -146,6 +150,7 @@ def plus(u):
     db_sess = db_session.create_session()
     medicines = db_sess.query(News).all()
     return render_template('catalog.html', title='Каталог', med=medicines)
+
 
 @login_required
 @app.route('/delete/<u>', methods=['GET', 'POST'])
@@ -179,6 +184,7 @@ def add_item():
         new_med(form.title.data, int(form.price.data), int(form.quantity.data), filename)
         return catalog()
     return render_template('add_item.html', form=form)
+
 
 def pars():
     cities = []
@@ -218,6 +224,44 @@ def new_med(title, price, quantity, picture):
         session = db_session.create_session()
         session.add(m)
         session.commit()
+
+
+def way_to_home(address):
+    def lonlat_distance(a, b):
+
+        degree_to_meters_factor = 111 * 1000  # 111 километров в метрах
+        a_lon, a_lat = a
+        b_lon, b_lat = b
+
+        # Берем среднюю по широте точку и считаем коэффициент для нее.
+        radians_lattitude = math.radians((a_lat + b_lat) / 2.)
+        lat_lon_factor = math.cos(radians_lattitude)
+
+        dx = abs(a_lon - b_lon) * degree_to_meters_factor * lat_lon_factor
+        dy = abs(a_lat - b_lat) * degree_to_meters_factor
+
+        distance = math.sqrt(dx * dx + dy * dy)
+
+        return distance
+
+    home = f'http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode=Малый Знаменский переулок, 7/10 стр. 5&format=json'
+    school = f'http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={address}&format=json'
+    response_1 = requests.get(home)
+    response_2 = requests.get(school)
+    if response_1 and response_2:
+        json_response_1 = response_1.json()
+        json_response_2 = response_2.json()
+        home_coord = json_response_1["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]['Point'][
+            'pos'].split()
+        school_coord = json_response_2["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]['Point'][
+            'pos'].split()
+        home_coord[0] = float(home_coord[0])
+        home_coord[1] = float(home_coord[1])
+        school_coord[0] = float(home_coord[0])
+        school_coord[1] = float(school_coord[1])
+        return lonlat_distance(home_coord, school_coord)
+    else:
+        return False
 
 
 def main():
