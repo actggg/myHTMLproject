@@ -3,7 +3,7 @@ import os
 
 import requests
 from bs4 import BeautifulSoup
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 
@@ -275,7 +275,7 @@ def main():
     new_med("Ринофлуимуцил", 554, 50, "Ринофлуимуцил.jpg")
     new_med("Йодомарин", 224, 50, "Йодомарин.png")
     new_med("Эспумизан", 354, 25, "Эспумизан.jpg")
-    app.run(port=8124, host='127.0.0.1')
+    app.run(port=8125, host='127.0.0.1')
 
 
 if __name__ == '__main__':

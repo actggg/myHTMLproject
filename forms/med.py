@@ -10,4 +10,4 @@ class MedForm(FlaskForm):
     price = StringField('Цена')
     quantity = StringField('Количество')
     picture = FileField('Картинка', validators=[FileRequired()])
-    submit = SubmitField('Войти')
+    submit = SubmitField('Добавить')
