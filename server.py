@@ -3,7 +3,7 @@ import os
 
 import requests
 from bs4 import BeautifulSoup
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 
@@ -124,11 +124,15 @@ def minus(u, where):
             session = db_session.create_session()
             x = session.query(News).filter(News.id.like(u)).first()
             u = session.query(User).filter(User.id.like(current_user.id)).first()
-            u.money -= int(round(way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') / 20, 0))
-            u.money -= int(form.quantity.data) * x.price
-            x.quantity = x.quantity - int(form.quantity.data)
-            session.commit()
-            return basket()
+            if x.quantity - int(form.quantity.data) < 0:
+                return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
+            else:
+                u.money -= int(
+                    round(way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') / 20, 0))
+                u.money -= int(form.quantity.data) * x.price
+                x.quantity = x.quantity - int(form.quantity.data)
+                session.commit()
+                return basket()
         else:
             return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
     return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
@@ -177,13 +181,19 @@ def accept(id, quantity):
 def add_item():
     form = MedForm()
     if form.validate_on_submit():
-        f = form.picture.data
-        filename = secure_filename(f.filename)
-        f.save(os.path.join(
-            './static/img/лекарства', filename
-        ))
-        new_med(form.title.data, int(form.price.data), int(form.quantity.data), filename)
-        return catalog()
+        db_sess = db_session.create_session()
+        all = db_sess.query(News).all().title
+        if form.title.data not in all:
+            f = form.picture.data
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(
+                './static/img/лекарства', filename
+            ))
+            new_med(form.title.data, int(form.price.data), int(form.quantity.data), filename)
+            return catalog()
+        else:
+            u = db_sess.query(News).filter(News.title.like(form.title.data))
+            u.quantity = int(form.quantity.data)
     return render_template('add_item.html', form=form)
 
 
@@ -275,7 +285,7 @@ def main():
     new_med("Ринофлуимуцил", 554, 50, "Ринофлуимуцил.jpg")
     new_med("Йодомарин", 224, 50, "Йодомарин.png")
     new_med("Эспумизан", 354, 25, "Эспумизан.jpg")
-    app.run(port=8125, host='127.0.0.1')
+    app.run(port=8127, host='127.0.0.1')
 
 
 if __name__ == '__main__':
