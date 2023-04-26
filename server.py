@@ -105,52 +105,52 @@ def catalog():
 @login_required
 @app.route('/basket', methods=['GET', 'POST'])
 def basket():
-    x = []
+    basket_list = []
     db_sess = db_session.create_session()
     medicines = db_sess.query(Med).filter(Med.id_user.like(current_user.id)).all()
     for i in medicines:
-        x.append(db_sess.query(News).filter(News.id.like(i.id_med)).first())
-    return render_template('basket.html', title='Корзина', med=x)
+        basket_list.append(db_sess.query(News).filter(News.id.like(i.id_med)).first())
+    return render_template('basket.html', title='Корзина', med=basket_list)
 
 
 @login_required
-@app.route('/minus/<u>/<where>', methods=['GET', 'POST'])
-def minus(u, where):
+@app.route('/minus/<user>/<where>', methods=['GET', 'POST'])
+def minus(user, where):
     form = PlaceForm()
     cities = pars()
     if form.validate_on_submit():
         if way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') != False:
             db_session.global_init("db/blogs.db")
             session = db_session.create_session()
-            x = session.query(News).filter(News.id.like(u)).first()
-            u = session.query(User).filter(User.id.like(current_user.id)).first()
-            if x.quantity - int(form.quantity.data) < 0:
-                return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
+            med = session.query(News).filter(News.id.like(user)).first()
+            user = session.query(User).filter(User.id.like(current_user.id)).first()
+            if med.quantity - int(form.quantity.data) < 0:
+                return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=user)
             else:
-                u.money -= int(
+                user.money -= int(
                     round(way_to_home(f'{form.city.data}{form.street.data}{form.house_number.data}') / 20, 0))
-                u.money -= int(form.quantity.data) * x.price
-                x.quantity = x.quantity - int(form.quantity.data)
+                user.money -= int(form.quantity.data) * med.price
+                med.quantity = med.quantity - int(form.quantity.data)
                 session.commit()
                 return basket()
         else:
-            return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
-    return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=u)
+            return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=user)
+    return render_template('place_form.html', title='Анкета заказа', form=form, cities=cities, id=user)
 
 
 @login_required
-@app.route('/plus/<u>', methods=['GET', 'POST'])
-def plus(u):
+@app.route('/plus/<user>', methods=['GET', 'POST'])
+def plus(user):
     db_session.global_init("db/blogs.db")
     session = db_session.create_session()
-    if session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first():
-        session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first().quantity += 1
+    if session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(user)).first():
+        session.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(user)).first().quantity += 1
     else:
-        m = Med()
-        m.id_user = current_user.id
-        m.id_med = u
-        m.quantity = 1
-        session.add(m)
+        med = Med()
+        med.id_user = current_user.id
+        med.id_med = user
+        med.quantity = 1
+        session.add(med)
         session.commit()
     db_sess = db_session.create_session()
     medicines = db_sess.query(News).all()
@@ -158,10 +158,10 @@ def plus(u):
 
 
 @login_required
-@app.route('/delete/<u>', methods=['GET', 'POST'])
-def delete(u):
+@app.route('/delete/<user>', methods=['GET', 'POST'])
+def delete(user):
     db_sess = db_session.create_session()
-    med = db_sess.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(u)).first()
+    med = db_sess.query(Med).filter(Med.id_user.like(current_user.id) & Med.id_med.like(user)).first()
     if med:
         db_sess.delete(med)
         db_sess.commit()
@@ -184,16 +184,16 @@ def add_item():
         db_sess = db_session.create_session()
         all = db_sess.query(News).all().title
         if form.title.data not in all:
-            f = form.picture.data
-            filename = secure_filename(f.filename)
-            f.save(os.path.join(
+            picture = form.picture.data
+            filename = secure_filename(picture.filename)
+            picture.save(os.path.join(
                 './static/img/лекарства', filename
             ))
             new_med(form.title.data, int(form.price.data), int(form.quantity.data), filename)
             return catalog()
         else:
-            u = db_sess.query(News).filter(News.title.like(form.title.data))
-            u.quantity = int(form.quantity.data)
+            user = db_sess.query(News).filter(News.title.like(form.title.data))
+            user.quantity = int(form.quantity.data)
     return render_template('add_item.html', form=form)
 
 
@@ -227,13 +227,13 @@ def if_in_table(name):
 
 def new_med(title, price, quantity, picture):
     if if_in_table(title):
-        m = News()
-        m.title = title
-        m.price = price
-        m.quantity = quantity
-        m.picture = picture
+        med = News()
+        med.title = title
+        med.price = price
+        med.quantity = quantity
+        med.picture = picture
         session = db_session.create_session()
-        session.add(m)
+        session.add(med)
         session.commit()
 
 
@@ -262,15 +262,15 @@ def way_to_home(address):
     if response_1 and response_2:
         json_response_1 = response_1.json()
         json_response_2 = response_2.json()
-        home_coord = json_response_1["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]['Point'][
+        place_coord = json_response_1["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]['Point'][
             'pos'].split()
         school_coord = json_response_2["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]['Point'][
             'pos'].split()
-        home_coord[0] = float(home_coord[0])
-        home_coord[1] = float(home_coord[1])
-        school_coord[0] = float(home_coord[0])
+        place_coord[0] = float(place_coord[0])
+        place_coord[1] = float(place_coord[1])
+        school_coord[0] = float(place_coord[0])
         school_coord[1] = float(school_coord[1])
-        return lonlat_distance(home_coord, school_coord)
+        return lonlat_distance(place_coord, school_coord)
     else:
         return False
 
